@@ -5,7 +5,7 @@ require 'peek-active_resource/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "peek-active_resource"
-  spec.version       = .::VERSION
+  spec.version       = Peek::ActiveResource::VERSION
   spec.authors       = ["Mike Mayo"]
   spec.email         = ["gotmayonase@gmail.com"]
   spec.description   = %q{Take a speec into the ActiveResource requests made during your app's requests.}
