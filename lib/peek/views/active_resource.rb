@@ -1,3 +1,5 @@
+require 'active_resource'
+
 class ActiveResource::Connection
   class << self
     attr_accessor :request_time, :request_count
