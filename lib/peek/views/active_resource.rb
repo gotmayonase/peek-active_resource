@@ -2,20 +2,22 @@ class ActiveResource::Connection
   class << self
     attr_accessor :request_time, :request_count
   end
-  self.request_time = Atomic.new(0)
-  self.request_count = Atomic.new(0)
 
-  def request_with_timing(method, path, *arguments)
+  self.request_time = Concurrent::AtomicReference.new(0)
+  self.request_count = Concurrent::AtomicReference.new(0)
+end
+
+module RequestWithTiming
+  def request(method, path, *arguments)
     start = Time.now
-    request_without_timing(method, path, *arguments)
+    super(method, path, *arguments)
   ensure
     duration = (Time.now - start)
-    ActiveResource::Connection.request_time.update { |value| value + duration }
-    ActiveResource::Connection.request_count.update { |value| value + 1 }
+    self.class.request_time.update { |value| value + duration }
+    self.class.request_count.update { |value| value + 1 }
   end
-  alias_method_chain :request, :timing
-  
 end
+ActiveResource::Connection.prepend(RequestWithTiming)
 
 module Peek
   module Views
