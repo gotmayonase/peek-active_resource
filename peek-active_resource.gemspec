@@ -20,5 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'peek'
   spec.add_dependency 'activeresource'
-  spec.add_dependency 'atomic', '>= 1.0.0'
+  spec.add_dependency 'concurrent-ruby'
 end
